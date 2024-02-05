@@ -1,0 +1,30 @@
+q: What color is Moony?
+a: Red
+b: Blue
+c: Green
+d: Pink
+-b
+q: Who wrote the novel '1984'?
+a: George Orwell
+b: Aldous Huxley
+c: J.K. Rowling
+d: Stephen King
+-a
+q: What is the largest planet in our solar system?
+a: Earth
+b: Mars
+c: Jupiter
+d: Saturn
+-c
+q: In what year did the Titanic sink?
+a: 1912
+b: 1923
+c: 1905
+d: 1898
+-a
+q: Which element is denoted by the chemical symbol 'O'?
+a: Gold
+b: Oxygen
+c: Osmium
+d: Hydrogen
+-b

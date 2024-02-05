@@ -17,6 +17,10 @@ typedef struct
     char correct_answer;
 } quiz_question;
 
+quiz_question quiz[TOTAL_QUESTIONS];
+
+void loadQuiz();
+
 int main(void)
 {
     //init ncurses
@@ -25,42 +29,7 @@ int main(void)
     keypad(stdscr, TRUE);
     nodelay(stdscr, FALSE); 
 
-    quiz_question quiz[TOTAL_QUESTIONS];
-
-    strcpy(quiz[0].question, "What does the ++ operator do?");
-    strcpy(quiz[0].answerA, "Add two to a number");
-    strcpy(quiz[0].answerB, "Add one to a number");
-    strcpy(quiz[0].answerC, "Subtract two to a number");
-    strcpy(quiz[0].answerD, "Subtract one to a number");
-    quiz[0].correct_answer = 'b';
-
-    strcpy(quiz[1].question, "What does the ++ operator do?");
-    strcpy(quiz[1].answerA, "Add two to a number");
-    strcpy(quiz[1].answerB, "Add one to a number");
-    strcpy(quiz[1].answerC, "Subtract two to a number");
-    strcpy(quiz[1].answerD, "Subtract one to a number");
-    quiz[1].correct_answer = 'b';
-
-    strcpy(quiz[2].question, "What does the ++ operator do?");
-    strcpy(quiz[2].answerA, "Add two to a number");
-    strcpy(quiz[2].answerB, "Add one to a number");
-    strcpy(quiz[2].answerC, "Subtract two to a number");
-    strcpy(quiz[2].answerD, "Subtract one to a number");
-    quiz[2].correct_answer = 'b';
-
-    strcpy(quiz[3].question, "What does the ++ operator do?");
-    strcpy(quiz[3].answerA, "Add two to a number");
-    strcpy(quiz[3].answerB, "Add one to a number");
-    strcpy(quiz[3].answerC, "Subtract two to a number");
-    strcpy(quiz[3].answerD, "Subtract one to a number");
-    quiz[3].correct_answer = 'b';
-
-    strcpy(quiz[4].question, "What does the ++ operator do?");
-    strcpy(quiz[4].answerA, "Add two to a number");
-    strcpy(quiz[4].answerB, "Add one to a number");
-    strcpy(quiz[4].answerC, "Subtract two to a number");
-    strcpy(quiz[4].answerD, "Subtract one to a number");
-    quiz[4].correct_answer = 'b';
+    loadQuiz();
 
     int total_correct = 0;
     char answer;
@@ -99,4 +68,108 @@ int main(void)
     endwin(); 
 
     return 0;
+}
+
+void loadQuiz()
+{
+    FILE *fh;
+
+    fh = fopen("quiz.txt", "r");
+
+    if(fh == NULL)
+    {
+        printw("Cannot read quiz data (quiz.txt)");
+        scanw("%c", NULL);
+        refresh();
+
+        endwin(); 
+        return;
+    }
+
+    char c;
+    char state = 's'; // states are start = s, and then first char of linebreak
+    char qBuffer[MAX_QUESTION]; 
+    int q = 0;
+    int i = 0;
+    char aBuffer[MAX_ANSWER]; 
+    while( (c = fgetc(fh)) != EOF)
+    {
+
+        //Questions
+        if(c == ':')
+        {
+            // reset the buffer index and clear buffers
+            q = 0;
+            memset(aBuffer, 0, sizeof(aBuffer)); 
+            memset(qBuffer, 0, sizeof(qBuffer));
+        }
+        else if(state == 'q')
+        {
+            if(c == '\n')
+            {
+                qBuffer[q+1] = '\0';
+                strcpy(quiz[i].question, qBuffer);
+                state = 's';
+            }
+            else
+            {
+                qBuffer[q] = c;
+                q++;
+            }
+            
+        }
+        else if(state == 'a' || state == 'b' || state == 'c' || state == 'd' )
+        {
+
+            if(c == '\n'){
+                aBuffer[q+1] = '\0';
+                switch(state)
+                {
+                    case 'a': strcpy(quiz[i].answerA, aBuffer);
+                        break;
+                    case 'b': strcpy(quiz[i].answerB, aBuffer);
+                        break;
+                    case 'c': strcpy(quiz[i].answerC, aBuffer);
+                        break;
+                    case 'd': strcpy(quiz[i].answerD, aBuffer);
+                        break;
+                }
+                state = 's';
+            }
+            else
+            {
+                aBuffer[q] = c;
+                q++;
+            }
+            
+        }
+        else if(state == '-')
+        {
+            if(c == '\n')
+            {
+                state = 's';
+            }
+            else
+            {
+                quiz[i].correct_answer = c;
+                i++;
+            }
+        }
+
+        
+        if(state == 's')
+        {
+            state = c;
+        }
+        // End of line resets the state
+        if(c == '\n')
+        {  
+            state = 's';
+        }
+        
+    }
+
+
+    fclose(fh);
+
 }
