@@ -1,0 +1,14 @@
+g:Lower Decks
+g:Equestria
+c:Beckett:Mariner:9992224444:BMariner:Gamer27::0
+c:Brad:Boimler:3332556234:::0
+c:D'Vana:Tendi:5551112222:TendiNurse:OrionSciences::0
+c:Sam:Rutherford:5553334444:EngineerSam:TechWiz::0
+c:Carol:Freeman:5555556666:CaptainCarol:StarfleetCommand::0
+c:Jack:Ransom:5557778888:CmdrRansom:FirstOfficer::0
+c:Twilight:Sparkle:5551234567:TwilightSparkle:AlicornMagic:sparklelibrary.eq:1
+c:Rainbow:Dash:5557654321:FastestFlyer:RainboomDash:cloudsdaleweather.eq:1
+c:Pinkie:Pie:5559090909:PartyPony:PinkiePieParty:sugarcubecorner.eq:1
+c:Applejack:Apple:5552020202:HonestPony:ApplejackOrchard:sweetappleacres.eq:1
+c:Rarity:Belle:5553030303:RarityFashion:GemsAndJewels:carouselboutique.eq:1
+c:Fluttershy::5554040404:ShyCare:AnimalWhisperer:fluttershyscottage.eq:1
